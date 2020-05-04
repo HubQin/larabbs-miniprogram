@@ -1,6 +1,10 @@
+<style>
+
+</style>
+
 <template>
   <view class="container">
-    首页话题列表
+
   </view>
 </template>
 

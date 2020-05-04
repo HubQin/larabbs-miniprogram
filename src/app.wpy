@@ -28,10 +28,9 @@ wepy.app({
     userInfo: null
   },
 
-  onLaunch() {
-    wepy.wx.login().then(res => {
-      console.log('login: ', res)
-    })
+  async onLaunch() {
+    const res = await wepy.wx.login()
+    console.log(res)
   },
 
   methods: {
@@ -56,6 +55,7 @@ wepy.app({
     pages: [
       'pages/index',
       'pages/user',
+      'pages/auth/login',
     ],
     window: {
       backgroundTextStyle: 'light',

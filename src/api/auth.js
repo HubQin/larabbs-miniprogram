@@ -12,3 +12,12 @@ export function refresh(token) {
     }
   })
 }
+
+export function getCaptcha(phone) {
+  return request('captchas', {
+    method: 'post',
+    data: {
+      phone: phone
+    }
+  })
+}

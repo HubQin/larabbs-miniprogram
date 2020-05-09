@@ -67,7 +67,8 @@
       // 是否有错
       errors: {},
       // 错误信息
-      errorMessage: ''
+      errorMessage: '',
+      validatorInstance: null
     },
     onReady() {
       this.initValidator()

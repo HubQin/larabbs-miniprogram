@@ -21,9 +21,81 @@
     background-color: #d8d8d8;
     float: right;
   }
+  /*分类*/
+  .weui-flex {
+    align-items: center;
+  }
+  .weui-cells {
+    margin-top: 0;
+    opacity: 0;
+    transition: .3s;
+    &:before, &:after {
+      display: none;
+    }
+    &_show {
+      opacity: 1;
+    }
+  }
+  .weui-cell {
+    &:before {
+      right: 15px;
+    }
+  }
+  .category-list__item {
+    margin: 10px 0;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    overflow: hidden;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  .category-list__item_selected {
+    background-color: #eeeeee;
+  }
+  .category-list__img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .category-list__item-hd {
+    padding: 20px;
+    transition: opacity .3s;
+    &_show {
+      opacity: .4;
+    }
+  }
+  .category-list__item-bd {
+    height: 0;
+    overflow: hidden;
+    &_show {
+      height: auto;
+    }
+  }
 </style>
 <template>
   <div class="page">
+    <div class="category-list__item">
+      <div class="weui-flex category-list__item-hd" @tap="categoryToggle">
+        <div class="weui-flex__item page-title">{{ currentCategoryName }}</div>
+        <image class="category-list__img" src="/assets/images/category.png" />
+      </div>
+      <div class="category-list__item-bd"
+           :class="{'category-list__item-bd_show' : categoryOpen}">
+        <div class="weui-cells" :class="{ 'weui-cells_show' : categoryOpen }">
+          <div @tap="changeCategory" class="weui-cell weui-cell_access" :class="{'category-list__item_selected' : !currentCategoryId }">
+            <div class="weui-cell__bd">话题</div>
+          </div>
+          <div v-for="category in categories" :key="category.id">
+            <div @tap="changeCategory(category)"
+                 class="weui-cell weui-cell_access"
+                 :class="{'category-list__item_selected': currentCategoryId == category.id}">
+              <div class="weui-cell__bd">{{ category.name }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="page__bd">
       <div class="weui-panel weui-panel_access">
         <div class="weui-panel__bd">
@@ -64,10 +136,16 @@
 </config>
 <script>
   import wepy from '@wepy/core'
-  import { getTopics } from '@/api/topic'
+  import { getTopics, getCategories } from '@/api/topic'
 
   wepy.page({
     data: {
+      // 分类数据
+      categories: [],
+      // 当前的分类
+      currentCategory: {},
+      // 是否显示分类
+      categoryOpen: false,
       // 话题数据
       topics: [],
       // 当前分页
@@ -77,8 +155,17 @@
       // 是否在加载中
       isLoading: false
     },
+    computed: {
+      currentCategoryId() {
+        return this.currentCategory.id || null
+      },
+      currentCategoryName() {
+        return this.currentCategory.name || '话题'
+      }
+    },
     async onLoad() {
       this.loadTopics()
+      this.loadCategories()
     },
     async onPullDownRefresh() {
       await this.loadTopics(true)
@@ -95,17 +182,32 @@
       this.isLoading = false
     },
     methods: {
+      async loadCategories() {
+        // 从缓存中获取分类数据
+        let categories = wx.getStorageSync('categories')
+
+        if (!categories) {
+          const categoriesResponse = await getCategories()
+          categories = categoriesResponse.data.data
+
+          wx.setStorageSync('categories', categories)
+        }
+
+        this.categories = categories
+      },
       // 获取话题数据
       async loadTopics(reset = false) {
-        if (reset) {
-          this.page = 1
+        let params = {
+          page: this.page,
+          include: 'user,category'
+        }
+
+        if (this.currentCategoryId) {
+          params['filter[category_id]'] = this.currentCategoryId
         }
 
         // 请求话题列表接口
-        const topicsResponse = await getTopics({
-          page: this.page,
-          include: 'user,category'
-        })
+        const topicsResponse = await getTopics(params)
 
         // 将数据合并到 this.topics
         this.topics = reset ? topicsResponse.data.data : this.topics.concat(topicsResponse.data.data)
@@ -116,6 +218,17 @@
         if (pagination.current_page === pagination.last_page) {
           this.noMoreData = true
         }
+      },
+      categoryToggle() {
+        this.categoryOpen = !this.categoryOpen
+      },
+      async changeCategory (category = {}) {
+        this.currentCategory = category
+        this.categoryOpen = false
+        this.page = 1
+
+        // 设置 reset 为 true
+        this.loadTopics(true)
       }
     }
 

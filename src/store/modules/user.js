@@ -1,5 +1,5 @@
 import wepy from '@wepy/core'
-import { login, refresh } from '@/api/auth'
+import { login, refresh, register } from '@/api/auth'
 import * as auth from '@/utils/auth'
 import isEmpty from 'lodash/isEmpty'
 import { getCurrentUser, logout } from '@/api/user'
@@ -24,6 +24,14 @@ var getters = {
 
 // 定义 actions
 const actions = {
+  async register ({ dispatch }, params = {}) {
+    const loginData = await wepy.wx.login()
+    params.code = loginData.code
+
+    await register(params)
+
+    await dispatch('login')
+  },
   async login ({ dispatch, commit }, params = {}) {
     const loginData = await wepy.wx.login()
     params.code = loginData.code

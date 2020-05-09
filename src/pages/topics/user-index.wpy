@@ -15,6 +15,7 @@
 <script>
   import wepy from '@wepy/core'
   import { getUserTopics } from '@/api/topic'
+  import eventHub from '@/common/eventHub'
 
   wepy.page({
     data: {
@@ -31,6 +32,11 @@
     async onLoad(options) {
       this.userId = options.id
       this.loadTopics()
+      eventHub.$on('topic-deleted', (topic) => {
+        this.page = 1
+        this.noMoreData = false
+        this.loadTopics(true)
+      })
     },
     async onPullDownRefresh() {
       this.page = 1

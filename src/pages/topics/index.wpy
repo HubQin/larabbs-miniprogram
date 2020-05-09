@@ -110,6 +110,7 @@
 <script>
   import wepy from '@wepy/core'
   import { getTopics, getCategories } from '@/api/topic'
+  import eventHub from '@/common/eventHub'
 
   wepy.page({
     data: {
@@ -139,6 +140,11 @@
     async onLoad() {
       this.loadTopics()
       this.loadCategories()
+      eventHub.$on('topic-deleted', (topic) => {
+        this.page = 1
+        this.noMoreData = false
+        this.loadTopics(true)
+      })
     },
     async onPullDownRefresh() {
       await this.loadTopics(true)

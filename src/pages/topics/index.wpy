@@ -111,8 +111,14 @@
   import wepy from '@wepy/core'
   import { getTopics, getCategories } from '@/api/topic'
   import eventHub from '@/common/eventHub'
+  import store from '@/store'
+  import { mapGetters } from '@wepy/x'
+  import syncBadge from '@/mixins/sync-badge'
 
   wepy.page({
+    store,
+    mixins: [ syncBadge ],
+
     data: {
       // 分类数据
       categories: [],
@@ -135,7 +141,8 @@
       },
       currentCategoryName() {
         return this.currentCategory.name || '话题'
-      }
+      },
+      ...mapGetters([ 'unreadCount' ])
     },
     async onLoad() {
       this.loadTopics()

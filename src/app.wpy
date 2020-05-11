@@ -14,38 +14,20 @@
   wepy.use(vuex);
   wepy.use(promisify);
 
-
 wepy.app({
-  hooks: {
-    // App 级别 hook，对整个 App 生效
-    // 同时存在 Page hook 和 App hook 时，优先执行 Page hook，返回值再交由 App hook 处
-    'before-setData': function (dirty) {
-      console.log('setData dirty: ', dirty);
-      return dirty;
-    }
-  },
-  globalData: {
-    userInfo: null
-  },
-
+  store: require('./store').default,
   async onLaunch() {
-    const res = await wepy.wx.login()
-    console.log(res)
+    this.$store = this.$options.store;
+    this.updateUnreadCount()
+
+    setInterval(() => {
+      this.updateUnreadCount()
+    }, 60000)
   },
 
   methods: {
-
-    sleep (s) {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve('promise resolved')
-        }, s * 1000)
-      })
-    },
-
-    async testAsync () {
-      let d = await this.sleep(3);
-      console.log(d);
+    async updateUnreadCount() {
+      await this.$store.dispatch('updateUnreadCount')
     }
   }
 });

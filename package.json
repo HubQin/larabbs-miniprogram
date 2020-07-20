@@ -20,7 +20,7 @@
     "@wepy/core": "^2.0.0-alpha.16",
     "@wepy/use-promisify": "^2.0.6",
     "@wepy/x": "^2.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "miniprogram-slide-view": "0.0.3",
     "moment": "^2.25.3",
     "we-validator": "^2.1.11"

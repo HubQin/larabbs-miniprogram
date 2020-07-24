@@ -4,6 +4,20 @@
 # 页面展示
 
 ## 话题
-<img src="https://github.com/HubQin/gitlearn/raw/master/images/weapp/WeChat%20Image_20200725010040.jpg" style="max-width:35%;">
-<br>
+
+![话题列表](https://github.com/HubQin/gitlearn/raw/master/images/weapp/WeChat%20Image_20200725010040.jpg)
+
+![话题列表2](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010035.jpg)
+
+## 回复
+![话题回复](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010029.jpg)
+
+![删除回复](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010022.jpg)
+
+## 个人中心
+
+![个人中心](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010014.jpg)
+
+
+![个人中心-消息通知列表](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725005942.jpg)
 

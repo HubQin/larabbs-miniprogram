@@ -4,7 +4,8 @@
 # 页面展示
 
 ## 话题
-![话题列表](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010040.jpg)
+<img src="https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010040.jpg" style="width:40%">
+<br>
 
 ![话题列表2](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010035.jpg)
 

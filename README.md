@@ -1,0 +1,21 @@
+# larabbs-miniprogram
+微信小程序BBS，基于wepy，后端接口见：https://github.com/HubQin/larabbs6
+
+# 页面展示
+
+## 话题
+![话题列表](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010040.jpg)
+
+![话题列表2](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010035.jpg)
+
+## 回复
+![话题回复](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010029.jpg)
+
+![删除回复](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010022.jpg)
+
+## 个人中心
+
+![个人中心](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725010014.jpg)
+
+
+![个人中心-消息通知列表](https://github.com/HubQin/gitlearn/blob/master/images/weapp/WeChat%20Image_20200725005942.jpg)
